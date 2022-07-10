@@ -7,9 +7,9 @@ import tensorflow.keras.backend as K
 @tf.keras.utils.register_keras_serializable()
 class bDICEm(tf.keras.metrics.Metric):
 
-	def __init__(self, smooth=1e-6, **kwargs):
+	def __init__(self, name="bDICEm", smooth=1e-6, **kwargs):
         			
-		super().__init__(**kwargs)
+		super().__init__(name=name, **kwargs)
 		self.smooth = smooth
 
 	def update_state(self, y_true, y_pred, sample_weight=None):
