@@ -1,13 +1,13 @@
-# Binary DICE (Dice-Sørensen) metric
+# Binary Dice-Sørensen metric
 # https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient
 
 import tensorflow as tf
 import tensorflow.keras.backend as K
 
 @tf.keras.utils.register_keras_serializable()
-class bDICEm(tf.keras.metrics.Metric):
+class bDSCm(tf.keras.metrics.Metric):
 
-	def __init__(self, name="bDICEm", smooth=1e-6, **kwargs):
+	def __init__(self, smooth=1e-6, name="bDSCm", **kwargs):
         			
 		super().__init__(name=name, **kwargs)
 		self.smooth = smooth

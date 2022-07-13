@@ -1,6 +1,8 @@
-from .bDICEm import *
+from .bDSCm import *
 from .BCEm import *
+from .BCEl import *
 
-__all__ = ['bDICEm',
-           'BCEm'
+__all__ = ['bDSCm',
+           'BCEm',
+           'BCEl',
            ]
