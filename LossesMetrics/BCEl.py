@@ -1,4 +1,9 @@
-# Binary Cross Entropy loss
+# =================================
+# === Binary Cross Entropy loss ===
+# =================================
+
+# sources:
+# https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy
 
 import tensorflow as tf
 
