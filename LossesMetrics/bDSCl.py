@@ -1,6 +1,6 @@
-# ===================================
-# === binary Dice-Sørensen metric ===
-# ===================================
+# =================================
+# === binary Dice-Sørensen loss ===
+# =================================
 
 # sources:
 # https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient
@@ -18,8 +18,8 @@ class bDSCl(tf.keras.losses.Loss):
 
 	def call(self, y_true, y_pred):
 
-		y_true_f = K.flatten(self.y_true)
-		y_pred_f = K.flatten(self.y_pred)
+		y_true_f = K.flatten(y_true)
+		y_pred_f = K.flatten(y_pred)
 		intersection = K.sum(y_true_f * y_pred_f)
 		dsc_metric = (2. * intersection + self.smooth) / (K.sum(y_true_f) + K.sum(y_pred_f) + self.smooth)
 		dsc_loss = 1.0 - dsc_metric

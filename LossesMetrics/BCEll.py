@@ -8,7 +8,7 @@
 # https://www.rapidtables.com/calc/math/Log_Calculator.html
 
 import tensorflow as tf
-import tf.keras.backend as K
+import tensorflow.keras.backend as K
 
 @tf.keras.utils.register_keras_serializable()
 class BCEll(tf.keras.losses.Loss):
