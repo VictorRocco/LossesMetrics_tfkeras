@@ -4,6 +4,8 @@ from .BCEl import *
 from .BCEll import *
 from .bDSCl import *
 from .BCEll_bDSCl import *
+from .bFNRm import *
+from .bFNRl import *
 
 __all__ = ['bDSCm',
            'BCEm',
@@ -11,4 +13,6 @@ __all__ = ['bDSCm',
            'BCEll',
            'bDSCl',
            'BCEll_bDSCl',
+           'bFNRm',
+           'bFNRl',
            ]
