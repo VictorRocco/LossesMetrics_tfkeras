@@ -20,6 +20,7 @@ class BCEll(tf.keras.losses.Loss):
 
 	def call(self, y_true, y_pred):
 		bce_loss = self.loss_fnc(y_true, y_pred)
+		bce_loss = K.clip(bce_loss, K.epsilon(), 1.0 - K.epsilon()) #Yeah, it's incredible, i got some out of range
 		bce_logloss = -1.0 * K.log(1.0 - bce_loss)
 		return bce_logloss
 
