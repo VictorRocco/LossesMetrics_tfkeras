@@ -9,6 +9,9 @@ from .bFNRl import *
 from .bMSSSIMm import *
 from .bMSSSIMl import *
 from .bHUBERl_bMSSSIMl import *
+from .bSSIMm import *
+from .bSSIMl import *
+from .BCEl_bSSIMl import *
 
 __all__ = ['bDSCm',
            'BCEm',
@@ -20,5 +23,8 @@ __all__ = ['bDSCm',
            'bFNRl',
            'bMSSSIMm',
            'bMSSSIMl',
-           'bHUBERl_bMSSSIMl'
+           'bHUBERl_bMSSSIMl',
+           'bSSIMm',
+           'bSSIMl',
+           'BCEl_bSSIMl'
            ]
