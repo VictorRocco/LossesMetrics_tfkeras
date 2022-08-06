@@ -14,12 +14,12 @@ from .BCEl import BCEl
 @tf.keras.utils.register_keras_serializable()
 class BCEl_bSSIMl(tf.keras.losses.Loss):
 
-	def __init__(self, msssim_filter_size=11, msssim_filter_sigma=1.5, name="BCEl_bSSIMl", **kwargs):
+	def __init__(self, ssim_filter_size=11, ssim_filter_sigma=1.5, name="BCEl_bSSIMl", **kwargs):
 		super().__init__(name=name, **kwargs)
-		self.msssim_filter_size = msssim_filter_size
-		self.msssim_filter_sigma = msssim_filter_sigma
+		self.ssim_filter_size = ssim_filter_size
+		self.ssim_filter_sigma = ssim_filter_sigma
 
-		self.f_bSSIMl = bSSIMl(filter_size=self.msssim_filter_size, filter_sigma=self.msssim_filter_sigma)
+		self.f_bSSIMl = bSSIMl(filter_size=self.ssim_filter_size, filter_sigma=self.ssim_filter_sigma)
 		self.f_BCEl = BCEl()
 
 	def call(self, y_true, y_pred):
@@ -29,6 +29,6 @@ class BCEl_bSSIMl(tf.keras.losses.Loss):
 
 	def get_config(self):
 		config = super().get_config()
-		config['msssim_filter_size'] = self.msssim_filter_size
-		config['msssim_filter_sigma'] = self.msssim_filter_sigma
+		config['ssim_filter_size'] = self.ssim_filter_size
+		config['ssim_filter_sigma'] = self.ssim_filter_sigma
 		return config
