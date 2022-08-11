@@ -3,19 +3,9 @@
 # =================================
 
 # sources:
-# https://www.tensorflow.org/tutorials/generative/style_transfer
-# https://keras.io/examples/generative/neural_style_transfer/
-# https://arxiv.org/abs/1603.08155
-# https://en.wikipedia.org/wiki/Total_variation_denoising
-# https://github.com/leohu6/Perceptual-Loss-Style-Transfer
+# https://arxiv.org/pdf/1603.08155.pdf
 # https://github.com/milmor/perceptual-losses-neural-st
-# https://ieeexplore.ieee.org/document/8991779
-# https://arxiv.org/pdf/1508.06576.pdf
-# Single VGG instance:
-# https://www.tutorialspoint.com/python_design_patterns/python_design_patterns_singleton.htm
-# https://stackoverflow.com/questions/56119437/python-class-variable-accessed-by-multiple-instances
-# https://stackoverflow.com/questions/6760685/creating-a-singleton-in-python
-# https://stackoverflow.com/questions/51896862/how-to-create-singleton-class-with-arguments-in-python
+# https://github.com/leohu6/Perceptual-Loss-Style-Transfer/blob/master/trainer/utils/losses.py
 
 import tensorflow as tf
 import tensorflow.keras.backend as K
@@ -25,39 +15,22 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
 	__VGG_model_instance = None
 	__VGG_model_instance_shape = None
 
-	def __init__(self, input_shape=(256, 256, 3), name="bPERCEPTUALl", **kwargs):
+	def __init__(self, input_shape=(256, 256, 3),
+				 mse_weight=1.0,
+				 style_weights=[1.0, 1.0, 1.0, 1.0], #mean near 1.0 for bests results
+				 content_weights=[0.0, 0.5, 1.0, 0.5], #mean near 1.0 for bests results
+				 total_variation_weight=1.0,
+				 name="bPERCEPTUALl", **kwargs):
         			
 		super().__init__(name=name, **kwargs)
 		self.input_shape = input_shape
+		self._mse_weight = mse_weight
+		self._style_weights = style_weights
+		self._content_weights = content_weights
+		self._total_variation_weight = total_variation_weight
 
-		#NOTA: para cambiar tipo de vgg de 16 a 19, hay que cambiar 3 ineas de codigo (buscarlas)
-
-		#VGG19 very good
-		#self._style_layers = ['block1_conv1', 'block2_conv1', 'block3_conv1', 'block4_conv1']
-		#VGG19 tf original example
-		#https://www.tensorflow.org/tutorials/generative/style_transfer
-		#self._style_layers = ['block1_conv1', 'block2_conv1', 'block3_conv1',
-		#					 'block4_conv1', 'block5_conv1']
-		#VGG16 this 2 papers
-		#https://github.com/milmor/perceptual-losses-neural-st
-		#https://github.com/leohu6/Perceptual-Loss-Style-Transfer/blob/master/trainer/utils/losses.py
-		self._style_layers = ['block1_conv2', 'block2_conv2', 'block3_conv3', 'block4_conv3']
-		self._num_style_layers = len(self._style_layers)
-		self._style_weight = style_weight = 1.0
-
-		#VGG19 very good
-		#self._content_layers = ['block4_conv2']
-		#VGG19 tf original example
-		#https://www.tensorflow.org/tutorials/generative/style_transfer
-		#self._content_layers = ['block5_conv2']
-		#VGG16 this 2 papers
-		#https://github.com/milmor/perceptual-losses-neural-str
-		#https://github.com/leohu6/Perceptual-Loss-Style-Transfer/blob/master/trainer/utils/losses.py
-		self._content_layers = ['block3_conv3']
-		self._num_content_layers = len(self._content_layers)
-		self._content_weight = 1.0
-
-		self._total_variation_weight = 1.0
+		self._vgg_layers = ['block1_conv2', 'block2_conv2', 'block3_conv3', 'block4_conv3']
+		self._num_vgg_layers = len(self._vgg_layers)
 
 		self._vgg_model = self._get_vgg_model_instance()
 
@@ -70,15 +43,10 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
 		# NOTA: si cambia el shape (ej: de Sec2 a Sec3) y no se hace nuevo, da error incompatibilidad
 		if (bPERCEPTUALl.__VGG_model_instance == None) or \
 				bPERCEPTUALl.__VGG_model_instance_shape != self.input_shape:
-			layers = self._style_layers + self._content_layers
-
-			#vgg = tf.keras.applications.VGG19(input_shape=self.input_shape,
-			#								  weights='imagenet', include_top=False)
 			vgg = tf.keras.applications.VGG16(input_shape=self.input_shape,
 											  weights='imagenet', include_top=False)
 			vgg.trainable = False
-			vgg_outputs = [vgg.get_layer(layer_name).output for layer_name in
-						   (self._style_layers + self._content_layers)]
+			vgg_outputs = [vgg.get_layer(layer_name).output for layer_name in self._vgg_layers]
 
 			bPERCEPTUALl.__VGG_model_instance = tf.keras.Model([vgg.input], vgg_outputs)
 			bPERCEPTUALl.__VGG_model_instance_shape = self.input_shape
@@ -123,7 +91,7 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
 		model_outputs = self._vgg_model(preprocessed_input)
 		#print("_vgg_style_outputs outputs (item[0]) shape:", outputs[0].shape, flush=True)
 
-		return [style_output for style_output in model_outputs[:self._num_style_layers]]
+		return [style_output for style_output in model_outputs]
 
 	def _vgg_content_outputs(self, input):
 		assert input.shape.ndims == 4
@@ -139,7 +107,11 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
 		model_outputs = self._vgg_model(preprocessed_input)
 		#print("_vgg_content_outputs outputs (item[0]) shape:", outputs[0].shape, flush=True)
 
-		return [content_output for content_output in model_outputs[self._num_style_layers:]]
+		return [content_output for content_output in model_outputs]
+	def _mse_loss(self, y_true, y_pred):
+		assert y_pred.shape.ndims == 4
+		mse_loss = tf.keras.losses.MeanSquaredError()(y_true, y_pred)
+		return mse_loss
 
 	def _style_loss(self, y_true, y_pred):
 		#print("_style_loss y_true shape:", y_true.shape, flush=True)
@@ -158,13 +130,8 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
 		#print("_style_loss y_true_style_outputs shape:", y_true_style_outputs.shape, flush=True)
 		#print("_style_loss y_pred_style_outputs shape:", y_pred_style_outputs.shape, flush=True)
 
-		#denominator based on num_channels and image_size
-		#denominator = (4.0 * (y_true.shape[3] ** 2) * ((y_true.shape[1] * y_true.shape[2]) ** 2)) * self._num_style_layers
-		#denominator = (4.0 * (y_true.shape[2] ** 2) * ((y_true.shape[0] * y_true.shape[1]) ** 2)) * self._num_style_layers
-		denominator = self._num_style_layers #since normalized
-
 		style_loss = 0
-		for true, pred in zip(y_true_style_outputs, y_pred_style_outputs):
+		for true, pred, weight in zip(y_true_style_outputs, y_pred_style_outputs, self._style_weights):
 			#print("_style_loss FOR true shape:", true.shape, flush=True)
 
 			true_mean, true_std = self._get_mean_std(true)
@@ -177,9 +144,9 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
 			#tf.print("_style_loss true_style mean std:", true_mean, true_std)
 			#tf.print("_style_loss pred_style mean std:", pred_mean, pred_std)
 
-			style_loss += tf.keras.losses.MeanSquaredError()(true_normalized, pred_normalized)
+			style_loss += weight * tf.keras.losses.MeanSquaredError()(true_normalized, pred_normalized)
 
-		style_loss /= denominator
+		style_loss /= self._num_vgg_layers
 		#print("_style_loss style_loss shape dtype:", style_loss.shape, style_loss.dtype, flush=True)
 
 		return style_loss
@@ -191,10 +158,8 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
 		y_true_content_outputs = self._vgg_content_outputs(y_true)
 		y_pred_content_outputs = self._vgg_content_outputs(y_pred)
 
-		denominator = self._num_content_layers
-
 		content_loss = 0
-		for true, pred in zip(y_true_content_outputs, y_pred_content_outputs):
+		for true, pred, weight in zip(y_true_content_outputs, y_pred_content_outputs, self._content_weights):
 			# print("_content_loss FOR true shape:", true.shape, flush=True)
 
 			true_mean, true_std = self._get_mean_std(true)
@@ -207,49 +172,52 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
 			# tf.print("_content_loss true_style mean std:", true_mean, true_std)
 			# tf.print("_content_loss pred_style mean std:", pred_mean, pred_std)
 
-			content_loss += tf.keras.losses.MeanSquaredError()(true_normalized, pred_normalized)
+			content_loss += weight * tf.keras.losses.MeanSquaredError()(true_normalized, pred_normalized)
 
-		content_loss /= denominator
+		content_loss /= self._num_vgg_layers
 		# print("_content_loss content_loss shape dtype:", content_loss.shape, content_loss.dtype, flush=True)
 
 		return content_loss
 
 	def _total_variation_loss(self, y_pred):
 		assert y_pred.shape.ndims == 4
-
-		#original option
-		#total_variation_loss = tf.image.total_variation(y_pred) #return (None, ) or float32
-
 		#high frequency variation
 		x_deltas = y_pred[:, :, 1:, :] - y_pred[:, :, :-1, :]
 		y_deltas = y_pred[:, 1:, :, :] - y_pred[:, :-1, :, :]
-
-		total_variation_loss = tf.reduce_mean(tf.abs(x_deltas)) + tf.reduce_mean(tf.abs(y_deltas))
+		total_variation_loss = tf.reduce_mean(tf.reduce_mean(tf.abs(x_deltas)) + tf.reduce_mean(tf.abs(y_deltas)))
 		return total_variation_loss
 
 	def call(self, y_true, y_pred):
 
+		#--- mse loss
+		mse_loss = self._mse_loss(y_true, y_pred)
+
+		#--- style loss
 		style_loss = tf.map_fn(lambda y: self._style_loss(y[0], y[1]), (y_true, y_pred),
 							   fn_output_signature=tf.float32)
 		#print("call style_loss shape dtype:", style_loss.shape, style_loss.dtype, flush=True)
 		style_loss = tf.reduce_mean(style_loss) #cambio de shape
 		#print("call style_loss shape dtype:", style_loss.shape, style_loss.dtype, flush=True)
 
+		#--- content loss
 		content_loss = self._content_loss(y_true, y_pred)
 		#print("call content_loss shape dtype:", content_loss.shape, content_loss.dtype, flush=True)
 
+		#--- total variation loss
 		total_variation_loss = self._total_variation_loss(y_pred)
-		total_variation_loss = tf.reduce_mean(total_variation_loss) #cambio de shape
 
 		#tf.print("loss style/content/tv:", style_loss, content_loss, total_variation_loss)
 		#print("style_loss / contento_loss / tv_loss:", style_loss, content_loss, total_variation_loss)
 
-		return self._style_weight * style_loss + \
-			   self._content_weight * content_loss + \
-			   self._total_variation_weight * total_variation_loss
+		#--- loss
+		return mse_loss + style_loss + content_loss + total_variation_loss
 
 	def get_config(self):
 
 		config = super().get_config()
 		config["input_shape"] = self.input_shape
+		config["mse_weight"] = self._mse_weight
+		config["style_weights"] = self._style_weights
+		config["content_weights"] = self._content_weights
+		config["total_variation_weight"] = self._total_variation_weight
 		return config
