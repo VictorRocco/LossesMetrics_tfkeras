@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="LossesMetrics",
-    version="0.1.9",
+    version="0.2.0",
     description="Losses / Metrics for TensorFlow / Keras",
     long_description=long_description,
     long_description_content_type="text/markdown",
