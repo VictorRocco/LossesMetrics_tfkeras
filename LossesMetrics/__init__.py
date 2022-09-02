@@ -13,6 +13,7 @@ from .bSSIMm import *
 from .bSSIMl import *
 from .BCEl_bSSIMl import *
 from .bPERCEPTUALl import *
+from .bDSCll import *
 
 __all__ = ['bDSCm',
            'BCEm',
@@ -28,5 +29,6 @@ __all__ = ['bDSCm',
            'bSSIMm',
            'bSSIMl',
            'BCEl_bSSIMl',
-           'bPERCEPTUALl'
+           'bPERCEPTUALl',
+           'bDSCll',
            ]
