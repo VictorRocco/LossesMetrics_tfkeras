@@ -9,7 +9,7 @@ import tensorflow as tf
 import tensorflow.keras.backend as K
 
 @tf.keras.utils.register_keras_serializable()
-class BCEm(tf.keras.metrics.Metric):
+class bBCEm(tf.keras.metrics.Metric):
 
 	def __init__(self, name="BCEm", **kwargs):
         			

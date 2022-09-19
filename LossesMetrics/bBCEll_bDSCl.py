@@ -11,12 +11,12 @@
 import tensorflow as tf
 import tensorflow.keras.backend as K
 
-from .BCEll import BCEll
+from .bBCEll import BCEll
 from .bDSCl import bDSCl
 
 
 @tf.keras.utils.register_keras_serializable()
-class BCEll_bDSCl(tf.keras.losses.Loss):
+class bBCEll_bDSCl(tf.keras.losses.Loss):
 
 	def __init__(self, bDSCl_smooth=1e-6, name="BCEll_bDSCl", **kwargs):
         			

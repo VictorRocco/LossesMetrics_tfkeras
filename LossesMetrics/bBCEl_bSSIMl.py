@@ -9,10 +9,10 @@
 import tensorflow as tf
 import tensorflow.keras.backend as K
 from .bSSIMl import bSSIMl
-from .BCEl import BCEl
+from .bBCEl import BCEl
 
 @tf.keras.utils.register_keras_serializable()
-class BCEl_bSSIMl(tf.keras.losses.Loss):
+class bBCEl_bSSIMl(tf.keras.losses.Loss):
 
 	def __init__(self, ssim_filter_size=11, ssim_filter_sigma=1.5, name="BCEl_bSSIMl", **kwargs):
 		super().__init__(name=name, **kwargs)

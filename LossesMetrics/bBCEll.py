@@ -11,7 +11,7 @@ import tensorflow as tf
 import tensorflow.keras.backend as K
 
 @tf.keras.utils.register_keras_serializable()
-class BCEll(tf.keras.losses.Loss):
+class bBCEll(tf.keras.losses.Loss):
 
 	def __init__(self, name="BCEll", **kwargs):
         			

@@ -8,7 +8,7 @@
 import tensorflow as tf
 
 @tf.keras.utils.register_keras_serializable()
-class BCEl(tf.keras.losses.Loss):
+class bBCEl(tf.keras.losses.Loss):
 
 	def __init__(self, name="BCEl", **kwargs):
         			
