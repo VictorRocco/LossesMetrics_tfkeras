@@ -15,6 +15,7 @@ from .bBCEl_bSSIMl import *
 from .bPERCEPTUALl import *
 from .bDSCll import *
 from .stacked_bBCEl import *
+from .stacked_bBCEm import *
 
 __all__ = ['bDSCm',
            'bBCEm',
@@ -33,4 +34,5 @@ __all__ = ['bDSCm',
            'bPERCEPTUALl',
            'bDSCll',
            'stacked_bBCEl',
+           'stacked_bBCEm',
            ]
