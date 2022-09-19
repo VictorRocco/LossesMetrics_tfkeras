@@ -9,29 +9,26 @@
 # https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient
 
 import tensorflow as tf
-import tensorflow.keras.backend as K
 
-from .bBCEll import BCEll
 from .bDSCl import bDSCl
-
+from .bBCEll import bBCEll
 
 @tf.keras.utils.register_keras_serializable()
 class bBCEll_bDSCl(tf.keras.losses.Loss):
 
-	def __init__(self, bDSCl_smooth=1e-6, name="BCEll_bDSCl", **kwargs):
+	def __init__(self, bDSCl_smooth=1e-6, name="bBCEll_bDSCl", **kwargs):
         			
 		super().__init__(name=name, **kwargs)
 		self.bDSCl_smooth = bDSCl_smooth
-		self.BCEll_fnc = BCEll()
+		self.bBCEll_fnc = bBCEll()
 		self.bDSCl_fnc = bDSCl(smooth=self.bDSCl_smooth)
 
 	def call(self, y_true, y_pred):
-		return self.BCEll_fnc(y_true, y_pred) + self.bDSCl_fnc(y_true, y_pred)
+		return self.bBCEll_fnc(y_true, y_pred) + self.bDSCl_fnc(y_true, y_pred)
 
 	def get_config(self):
 
 		config = super().get_config()
 		config["bDSCl_smooth"] = self.bDSCl_smooth
 		return config
-
 

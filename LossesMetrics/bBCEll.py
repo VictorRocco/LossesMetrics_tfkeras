@@ -13,7 +13,7 @@ import tensorflow.keras.backend as K
 @tf.keras.utils.register_keras_serializable()
 class bBCEll(tf.keras.losses.Loss):
 
-	def __init__(self, name="BCEll", **kwargs):
+	def __init__(self, name="bBCEll", **kwargs):
         			
 		super().__init__(name=name, **kwargs)
 		self.loss_fnc = tf.keras.losses.BinaryCrossentropy()
