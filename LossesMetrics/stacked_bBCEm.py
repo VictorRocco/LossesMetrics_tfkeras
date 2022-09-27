@@ -26,7 +26,8 @@ class stacked_bBCEm(tf.keras.metrics.Metric):
 
 	def result(self):
 
-		return self.metric_fnc(self.y_true, self.y_pred[0])
+		y_pred_unstacked = tf.unstack(self.y_pred)
+		return self.metric_fnc(self.y_true, y_pred_unstacked[0])
 
 	def get_config(self):
 
