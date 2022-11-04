@@ -10,25 +10,24 @@
 
 import tensorflow as tf
 
-from .bDSCl import bDSCl
 from .bBCEll import bBCEll
+from .bDSCl import bDSCl
+
 
 @tf.keras.utils.register_keras_serializable()
 class bBCEll_bDSCl(tf.keras.losses.Loss):
+    def __init__(self, bDSCl_smooth=1e-6, name="bBCEll_bDSCl", **kwargs):
 
-	def __init__(self, bDSCl_smooth=1e-6, name="bBCEll_bDSCl", **kwargs):
-        			
-		super().__init__(name=name, **kwargs)
-		self.bDSCl_smooth = bDSCl_smooth
-		self.bBCEll_fnc = bBCEll()
-		self.bDSCl_fnc = bDSCl(smooth=self.bDSCl_smooth)
+        super().__init__(name=name, **kwargs)
+        self.bDSCl_smooth = bDSCl_smooth
+        self.bBCEll_fnc = bBCEll()
+        self.bDSCl_fnc = bDSCl(smooth=self.bDSCl_smooth)
 
-	def call(self, y_true, y_pred):
-		return self.bBCEll_fnc(y_true, y_pred) + self.bDSCl_fnc(y_true, y_pred)
+    def call(self, y_true, y_pred):
+        return self.bBCEll_fnc(y_true, y_pred) + self.bDSCl_fnc(y_true, y_pred)
 
-	def get_config(self):
+    def get_config(self):
 
-		config = super().get_config()
-		config["bDSCl_smooth"] = self.bDSCl_smooth
-		return config
-
+        config = super().get_config()
+        config["bDSCl_smooth"] = self.bDSCl_smooth
+        return config

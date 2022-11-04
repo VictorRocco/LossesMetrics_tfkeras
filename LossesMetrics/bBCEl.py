@@ -7,21 +7,19 @@
 
 import tensorflow as tf
 
+
 @tf.keras.utils.register_keras_serializable()
 class bBCEl(tf.keras.losses.Loss):
+    def __init__(self, name="bBCEl", **kwargs):
 
-	def __init__(self, name="bBCEl", **kwargs):
-        			
-		super().__init__(name=name, **kwargs)
-		self.loss_fnc = tf.keras.losses.BinaryCrossentropy()
+        super().__init__(name=name, **kwargs)
+        self.loss_fnc = tf.keras.losses.BinaryCrossentropy()
 
-	def call(self, y_true, y_pred):
+    def call(self, y_true, y_pred):
 
-		return self.loss_fnc(y_true, y_pred)
+        return self.loss_fnc(y_true, y_pred)
 
-	def get_config(self):
+    def get_config(self):
 
-		config = super().get_config()
-		return config
-
-
+        config = super().get_config()
+        return config
