@@ -1,11 +1,13 @@
-# =================================
-# === Perceptual loss ===
-# =================================
+"""
+=================================
+=== Perceptual loss ===
+=================================
 
-# sources:
-# https://arxiv.org/pdf/1603.08155.pdf
-# https://github.com/milmor/perceptual-losses-neural-st
-# https://github.com/leohu6/Perceptual-Loss-Style-Transfer/blob/master/trainer/utils/losses.py
+Sources:
+- https://arxiv.org/pdf/1603.08155.pdf
+- https://github.com/milmor/perceptual-losses-neural-st
+- https://github.com/leohu6/Perceptual-Loss-Style-Transfer/blob/master/trainer/utils/losses.py
+"""
 
 import tensorflow as tf
 import tensorflow.keras.backend as K

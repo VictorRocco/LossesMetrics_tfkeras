@@ -1,11 +1,14 @@
-# =========================================
-# === stacked Binary Cross Entropy loss ===
-# =========================================
-# For multi output model with stacked outputs
-# Example: stacked outputs OUTPUT +OUT0 +OUT... +OUTN
+"""
+=========================================
+=== stacked Binary Cross Entropy loss ===
+=========================================
 
-# sources:
-# https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy
+For multi output model with stacked outputs
+Example: stacked outputs OUTPUT +OUT0 +OUT... +OUTN
+
+Sources:
+- https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy
+"""
 
 import tensorflow as tf
 

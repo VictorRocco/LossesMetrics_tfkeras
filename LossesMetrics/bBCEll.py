@@ -1,11 +1,13 @@
-# =====================================
-# === Binary Cross Entropy log loss ===
-# =====================================
+""""
+=====================================
+=== Binary Cross Entropy log loss ===
+=====================================
 
-# Sources:
-# https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy
-# https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a
-# https://www.rapidtables.com/calc/math/Log_Calculator.html
+Sources:
+- https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy
+- https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a
+- https://www.rapidtables.com/calc/math/Log_Calculator.html
+"""
 
 import tensorflow as tf
 import tensorflow.keras.backend as K

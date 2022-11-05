@@ -1,9 +1,11 @@
-# =================================
-# === binary Dice-Sørensen loss ===
-# =================================
+"""
+=================================
+=== binary Dice-Sørensen loss ===
+=================================
 
-# sources:
-# https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient
+Sources:
+- https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient
+"""
 
 import tensorflow as tf
 import tensorflow.keras.backend as K

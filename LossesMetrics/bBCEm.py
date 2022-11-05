@@ -1,9 +1,11 @@
-# ===================================
-# === Binary Cross Entropy metric ===
-# ===================================
+""""
+===================================
+=== Binary Cross Entropy metric ===
+===================================
 
-# sources:
-# https://keras.io/api/metrics/probabilistic_metrics/#binarycrossentropy-class
+Sources:
+- https://keras.io/api/metrics/probabilistic_metrics/#binarycrossentropy-class
+"""
 
 import tensorflow as tf
 

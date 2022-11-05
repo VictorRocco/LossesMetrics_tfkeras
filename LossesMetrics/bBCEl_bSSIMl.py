@@ -1,10 +1,12 @@
-# ============================
-# === BCE loss + SSIM loss ===
-# ============================
+"""
+============================
+=== BCE loss + SSIM loss ===
+============================
 
-# sources:
-# https://en.wikipedia.org/wiki/Structural_similarity
-# https://www.tensorflow.org/api_docs/python/tf/image/ssim
+Sources:
+- https://en.wikipedia.org/wiki/Structural_similarity
+- https://www.tensorflow.org/api_docs/python/tf/image/ssim
+"""
 
 import tensorflow as tf
 

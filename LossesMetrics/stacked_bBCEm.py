@@ -1,12 +1,15 @@
-# ===========================================
-# === stacked Binary Cross Entropy metric ===
-# ===========================================
-# For multi output model with stacked outputs
-# Example: stacked outputs OUTPUT +OUT0 +OUT... +OUTN
-# only takes OUTPUT for metric
+"""
+===========================================
+=== stacked Binary Cross Entropy metric ===
+===========================================
 
-# sources:
-# https://keras.io/api/metrics/probabilistic_metrics/#binarycrossentropy-class
+For multi output model with stacked outputs
+Example: stacked outputs OUTPUT +OUT0 +OUT... +OUTN
+only takes OUTPUT for metric
+
+Sources:
+- https://keras.io/api/metrics/probabilistic_metrics/#binarycrossentropy-class
+"""
 
 import tensorflow as tf
 

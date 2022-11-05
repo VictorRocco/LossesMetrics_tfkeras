@@ -1,11 +1,14 @@
-# ========================================
-# === stacked binary CONFIGURABLE loss ===
-# ========================================
-# For multi output model with stacked outputs
-# Example: stacked outputs in model: OUTPUT +OUT0 +OUT... +OUTN
-# Code in model: return Model(inputs, tf.stack([OUTPUT, OUT0, ... , OUTN]))
-# loss_fnc parameter example: [[bBCEl(), bSSIMl(), bDSCl()], bBCEl(), ... , bBCEl()]
-# in OUPUT we apply bBCEl+bSSIMl+bDSCl, in OUT0 bBCEl, ... , in OUTN bBCEl.
+"""
+========================================
+=== stacked binary CONFIGURABLE loss ===
+========================================
+
+For multi output model with stacked outputs
+Example: stacked outputs in model: OUTPUT +OUT0 +OUT... +OUTN
+Code in model: return Model(inputs, tf.stack([OUTPUT, OUT0, ... , OUTN]))
+loss_fnc parameter example: [[bBCEl(), bSSIMl(), bDSCl()], bBCEl(), ... , bBCEl()]
+in OUPUT we apply bBCEl+bSSIMl+bDSCl, in OUT0 bBCEl, ... , in OUTN bBCEl.
+"""
 
 import tensorflow as tf
 

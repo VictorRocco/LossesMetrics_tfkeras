@@ -1,12 +1,14 @@
-# =======================================================
-# === MS-SSIM metric ====================================
-# === Multi Scale Structural Similarity Index Measure ===
-# =======================================================
+"""
+=======================================================
+=== MS-SSIM metric ====================================
+=== Multi Scale Structural Similarity Index Measure ===
+=======================================================
 
-# sources:
-# https://en.wikipedia.org/wiki/Structural_similarity#Multi-Scale_SSIM
-# https://www.tensorflow.org/api_docs/python/tf/image/ssim_multiscale
-# https://arxiv.org/pdf/1511.08861.pdf
+Sources:
+- https://en.wikipedia.org/wiki/Structural_similarity#Multi-Scale_SSIM
+- https://www.tensorflow.org/api_docs/python/tf/image/ssim_multiscale
+- https://arxiv.org/pdf/1511.08861.pdf
+"""
 
 import tensorflow as tf
 import tensorflow.keras.backend as K

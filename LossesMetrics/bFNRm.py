@@ -1,11 +1,13 @@
-# =========================================
-# === binary False Negative Rate metric ===
-# =========================================
+"""
+=========================================
+=== binary False Negative Rate metric ===
+=========================================
 
-# sources:
-# https://en.wikipedia.org/wiki/False_positives_and_false_negatives
-# https://en.wikipedia.org/wiki/Precision_and_recall
-# https://towardsdatascience.com/performance-metrics-confusion-matrix-precision-recall-and-f1-score-a8fe076a2262
+Sources:
+- https://en.wikipedia.org/wiki/False_positives_and_false_negatives
+- https://en.wikipedia.org/wiki/Precision_and_recall
+- towardsdatascience.com/performance-metrics-confusion-matrix-precision-recall-and-f1-score-a8fe076a2262
+"""
 
 import tensorflow as tf
 import tensorflow.keras.backend as K

@@ -1,12 +1,14 @@
-# =================================================================
-# === Binary Cross Entropy log loss + binary Dice-Sørensen loss ===
-# =================================================================
+"""
+=================================================================
+=== Binary Cross Entropy log loss + binary Dice-Sørensen loss ===
+=================================================================
 
-# Sources:
-# https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy
-# https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a
-# https://www.rapidtables.com/calc/math/Log_Calculator.html
-# https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient
+Sources:
+- https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy
+- https://towardsdatascience.com/understanding-binary-cross-entropy-log-loss-a-visual-explanation-a3ac6025181a
+- https://www.rapidtables.com/calc/math/Log_Calculator.html
+- https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient
+"""
 
 import tensorflow as tf
 

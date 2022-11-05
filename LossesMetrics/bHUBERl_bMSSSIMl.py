@@ -1,12 +1,14 @@
-# =================================
-# === HUBER loss + MS-SSIM loss ===
-# =================================
+"""
+=================================
+=== HUBER loss + MS-SSIM loss ===
+=================================
 
-# sources:
-# https://en.wikipedia.org/wiki/Structural_similarity#Multi-Scale_SSIM
-# https://www.tensorflow.org/api_docs/python/tf/image/ssim_multiscale
-# https://arxiv.org/pdf/1511.08861.pdf
-# https://www.tensorflow.org/api_docs/python/tf/keras/losses/Huber
+Sources:
+- https://en.wikipedia.org/wiki/Structural_similarity#Multi-Scale_SSIM
+- https://www.tensorflow.org/api_docs/python/tf/image/ssim_multiscale
+- https://arxiv.org/pdf/1511.08861.pdf
+- https://www.tensorflow.org/api_docs/python/tf/keras/losses/Huber
+"""
 
 import tensorflow as tf
 
