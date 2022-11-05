@@ -1,12 +1,13 @@
 module = LossesMetrics
+directories = LossesMetrics
 
 pre_commit:
 	echo "pre commit..."
-	isort $(module)
-	black $(module)
-	#mypy $(module) --ignore-missing-imports --strict
-	flake8 $(module) --max-line-length 88 --max-complexity 10
-	#pylint $(module) --disable=E0401
+	isort $(directories)
+	black $(directories)
+	#mypy $(directories) --ignore-missing-imports --strict
+	flake8 $(directories) --max-line-length 110 --max-complexity 10 --extend-ignore=F405,F403
+	#pylint $(directories) --disable=E0401
 
 all: clean install
 
