@@ -15,6 +15,7 @@ import tensorflow.keras.backend as K
 
 @tf.keras.utils.register_keras_serializable()
 class bFNRl(tf.keras.losses.Loss):
+
     def __init__(self, smooth=1e-6, name="bFNRl", **kwargs):
 
         super().__init__(name=name, **kwargs)

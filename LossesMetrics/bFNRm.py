@@ -15,6 +15,7 @@ import tensorflow.keras.backend as K
 
 @tf.keras.utils.register_keras_serializable()
 class bFNRm(tf.keras.metrics.Metric):
+
     def __init__(self, scale=1.0, smooth=1e-6, name="bFNRm", **kwargs):
 
         super().__init__(name=name, **kwargs)

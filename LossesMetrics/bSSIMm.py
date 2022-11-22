@@ -15,9 +15,8 @@ import tensorflow.keras.backend as K
 
 @tf.keras.utils.register_keras_serializable()
 class bSSIMm(tf.keras.metrics.Metric):
-    def __init__(
-        self, filter_size=3, filter_sigma=1.5, max_val=1.0, name="bSSIMm", **kwargs
-    ):
+
+    def __init__(self, filter_size=3, filter_sigma=1.5, max_val=1.0, name="bSSIMm", **kwargs):
         super().__init__(name=name, **kwargs)
         self.filter_size = filter_size
         self.filter_sigma = filter_sigma
@@ -35,8 +34,7 @@ class bSSIMm(tf.keras.metrics.Metric):
                 filter_size=self.filter_size,
                 filter_sigma=self.filter_sigma,
                 max_val=self.max_val,
-            )
-        )
+            ))
 
     def get_config(self):
         config = super().get_config()

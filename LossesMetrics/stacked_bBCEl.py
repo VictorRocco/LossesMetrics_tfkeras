@@ -15,6 +15,7 @@ import tensorflow as tf
 
 @tf.keras.utils.register_keras_serializable()
 class stacked_bBCEl(tf.keras.losses.Loss):
+
     def __init__(self, name="stacked_bBCEl", **kwargs):
 
         super().__init__(name=name, **kwargs)

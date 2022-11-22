@@ -16,16 +16,13 @@ from .bSSIMl import bSSIMl
 
 @tf.keras.utils.register_keras_serializable()
 class bBCEl_bSSIMl(tf.keras.losses.Loss):
-    def __init__(
-        self, ssim_filter_size=11, ssim_filter_sigma=1.5, name="bBCEl_bSSIMl", **kwargs
-    ):
+
+    def __init__(self, ssim_filter_size=11, ssim_filter_sigma=1.5, name="bBCEl_bSSIMl", **kwargs):
         super().__init__(name=name, **kwargs)
         self.ssim_filter_size = ssim_filter_size
         self.ssim_filter_sigma = ssim_filter_sigma
 
-        self.f_bSSIMl = bSSIMl(
-            filter_size=self.ssim_filter_size, filter_sigma=self.ssim_filter_sigma
-        )
+        self.f_bSSIMl = bSSIMl(filter_size=self.ssim_filter_size, filter_sigma=self.ssim_filter_sigma)
         self.f_bBCEl = bBCEl()
 
     def call(self, y_true, y_pred):

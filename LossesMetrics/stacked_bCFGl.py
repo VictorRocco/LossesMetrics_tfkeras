@@ -15,13 +15,10 @@ import tensorflow as tf
 
 @tf.keras.utils.register_keras_serializable()
 class stacked_bCFGl(tf.keras.losses.Loss):
+
     def __init__(self, loss_fnc=None, name="stacked_bCFGl", **kwargs):
-        assert (
-            loss_fnc is not None
-        ), "missing loss_fnc parameter (list of losses functions)"
-        assert isinstance(
-            loss_fnc, list
-        ), "loss_fnc parameter is not a list (of losses functions)"
+        assert (loss_fnc is not None), "missing loss_fnc parameter (list of losses functions)"
+        assert isinstance(loss_fnc, list), "loss_fnc parameter is not a list (of losses functions)"
         super().__init__(name=name, **kwargs)
         self.loss_fnc = loss_fnc
 

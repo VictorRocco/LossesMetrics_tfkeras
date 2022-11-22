@@ -17,20 +17,13 @@ from .bMSSSIMl import bMSSSIMl
 
 @tf.keras.utils.register_keras_serializable()
 class bHUBERl_bMSSSIMl(tf.keras.losses.Loss):
-    def __init__(
-        self,
-        msssim_filter_size=3,
-        msssim_filter_sigma=1.5,
-        name="bHUBERl_bMSSSIMl",
-        **kwargs
-    ):
+
+    def __init__(self, msssim_filter_size=3, msssim_filter_sigma=1.5, name="bHUBERl_bMSSSIMl", **kwargs):
         super().__init__(name=name, **kwargs)
         self.msssim_filter_size = msssim_filter_size
         self.msssim_filter_sigma = msssim_filter_sigma
 
-        self.bMSSSIMl = bMSSSIMl(
-            filter_size=self.msssim_filter_size, filter_sigma=self.msssim_filter_sigma
-        )
+        self.bMSSSIMl = bMSSSIMl(filter_size=self.msssim_filter_size, filter_sigma=self.msssim_filter_sigma)
         self.bHUBERl = tf.keras.losses.Huber()
 
     def call(self, y_true, y_pred):

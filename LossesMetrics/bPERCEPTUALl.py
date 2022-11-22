@@ -19,16 +19,15 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
     __VGG_model_instance_shape = None
 
     def __init__(
-        self,
-        input_shape=(256, 256, 3),
-        loss_weight=1.0,
-        style_weights=[1.0, 1.0, 1.0, 1.0],  # mean near 1.0 for bests results
-        content_weights=[0.0, 0.5, 1.0, 0.5],  # mean near 1.0 for bests results
-        total_variation_weight=1.0,
-        loss="MSE",  # MSE, MAE
-        name="bPERCEPTUALl",
-        **kwargs
-    ):
+            self,
+            input_shape=(256, 256, 3),
+            loss_weight=1.0,
+            style_weights=[1.0, 1.0, 1.0, 1.0],  # mean near 1.0 for bests results
+            content_weights=[0.0, 0.5, 1.0, 0.5],  # mean near 1.0 for bests results
+            total_variation_weight=1.0,
+            loss="MSE",  # MSE, MAE
+            name="bPERCEPTUALl",
+            **kwargs):
 
         super().__init__(name=name, **kwargs)
         self.input_shape = input_shape
@@ -56,16 +55,13 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
 
         # NOTA: si cambia el shape (ej: de Sec2 a Sec3) y no se hace nuevo,
         # da error incompatibilidad
-        if (
-            bPERCEPTUALl.__VGG_model_instance is None
-        ) or bPERCEPTUALl.__VGG_model_instance_shape != self.input_shape:
-            vgg = tf.keras.applications.VGG16(
-                input_shape=self.input_shape, weights="imagenet", include_top=False
-            )
+        if (bPERCEPTUALl.__VGG_model_instance is
+                None) or bPERCEPTUALl.__VGG_model_instance_shape != self.input_shape:
+            vgg = tf.keras.applications.VGG16(input_shape=self.input_shape,
+                                              weights="imagenet",
+                                              include_top=False)
             vgg.trainable = False
-            vgg_outputs = [
-                vgg.get_layer(layer_name).output for layer_name in self._vgg_layers
-            ]
+            vgg_outputs = [vgg.get_layer(layer_name).output for layer_name in self._vgg_layers]
 
             bPERCEPTUALl.__VGG_model_instance = tf.keras.Model([vgg.input], vgg_outputs)
             bPERCEPTUALl.__VGG_model_instance_shape = self.input_shape
@@ -99,9 +95,7 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
         # input_tensor = tf.cast(input_tensor, tf.float32)  # avoid mixed_precision nan
         result = tf.linalg.einsum("bijc,bijd->bcd", input_tensor, input_tensor)
         # input_shape = tf.shape(input_tensor)
-        num_locations = tf.cast(
-            input_tensor.shape[1] * input_tensor.shape[2], tf.float32
-        )
+        num_locations = tf.cast(input_tensor.shape[1] * input_tensor.shape[2], tf.float32)
         return result / (num_locations)
 
     def _vgg_style_outputs(self, input):
@@ -159,16 +153,14 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
         y_true_style_outputs = self._vgg_style_outputs(y_true)  # out shape.ndims = 4
         # print("_style_loss y_true_style_outputs[0] shape:",
         # y_true_style_outputs[0].shape, flush=True)
-        y_true_style_outputs = [
-            self._gram_matrix(style) for style in y_true_style_outputs
-        ]  # out shape.ndims = 3
+        y_true_style_outputs = [self._gram_matrix(style)
+                                for style in y_true_style_outputs]  # out shape.ndims = 3
         # print("_style_loss y_true_style_outputs[0] (after gram_matrix) shape:",
         # y_true_style_outputs[0].shape, flush=True)
 
         y_pred_style_outputs = self._vgg_style_outputs(y_pred)  # out shape.ndims = 4
-        y_pred_style_outputs = [
-            self._gram_matrix(style) for style in y_pred_style_outputs
-        ]  # out shape.ndims = 3
+        y_pred_style_outputs = [self._gram_matrix(style)
+                                for style in y_pred_style_outputs]  # out shape.ndims = 3
 
         # print("_style_loss y_true_style_outputs shape:",
         # y_true_style_outputs.shape, flush=True)
@@ -176,9 +168,7 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
         # y_pred_style_outputs.shape, flush=True)
 
         style_loss = 0
-        for true, pred, weight in zip(
-            y_true_style_outputs, y_pred_style_outputs, self._style_weights
-        ):
+        for true, pred, weight in zip(y_true_style_outputs, y_pred_style_outputs, self._style_weights):
             # print("_style_loss FOR true shape:", true.shape, flush=True)
 
             true_normalized = self._normalized(true)
@@ -207,9 +197,7 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
         y_pred_content_outputs = self._vgg_content_outputs(y_pred)
 
         content_loss = 0
-        for true, pred, weight in zip(
-            y_true_content_outputs, y_pred_content_outputs, self._content_weights
-        ):
+        for true, pred, weight in zip(y_true_content_outputs, y_pred_content_outputs, self._content_weights):
             # print("_content_loss FOR true shape:", true.shape, flush=True)
 
             true_normalized = self._normalized(true)
@@ -222,9 +210,7 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
 
             # content_loss += weight *
             # tf.keras.losses.MeanSquaredError()(true_normalized, pred_normalized)
-            content_loss += weight * self._selected_loss(
-                true_normalized, pred_normalized
-            )
+            content_loss += weight * self._selected_loss(true_normalized, pred_normalized)
 
         content_loss /= self._num_vgg_layers
         # print("_content_loss content_loss shape dtype:",
@@ -238,8 +224,7 @@ class bPERCEPTUALl(tf.keras.losses.Loss):
         x_deltas = y_pred[:, :, 1:, :] - y_pred[:, :, :-1, :]
         y_deltas = y_pred[:, 1:, :, :] - y_pred[:, :-1, :, :]
         total_variation_loss = tf.reduce_mean(
-            tf.reduce_mean(tf.abs(x_deltas)) + tf.reduce_mean(tf.abs(y_deltas))
-        )
+            tf.reduce_mean(tf.abs(x_deltas)) + tf.reduce_mean(tf.abs(y_deltas)))
         return total_variation_loss * self._total_variation_weight
 
     def call(self, y_true, y_pred):

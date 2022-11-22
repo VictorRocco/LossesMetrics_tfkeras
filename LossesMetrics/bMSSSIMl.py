@@ -17,9 +17,8 @@ from .bMSSSIMm import bMSSSIMm
 
 @tf.keras.utils.register_keras_serializable()
 class bMSSSIMl(tf.keras.losses.Loss):
-    def __init__(
-        self, filter_size=11, filter_sigma=1.5, max_val=1.0, name="bMSSSIMl", **kwargs
-    ):
+
+    def __init__(self, filter_size=11, filter_sigma=1.5, max_val=1.0, name="bMSSSIMl", **kwargs):
         super().__init__(name=name, **kwargs)
         self.filter_size = filter_size
         self.filter_sigma = filter_sigma

@@ -12,6 +12,7 @@ import tensorflow as tf
 
 @tf.keras.utils.register_keras_serializable()
 class bBCEl(tf.keras.losses.Loss):
+
     def __init__(self, name="bBCEl", **kwargs):
 
         super().__init__(name=name, **kwargs)
